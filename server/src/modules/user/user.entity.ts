@@ -3,6 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('users')
@@ -10,10 +11,13 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ nullable: true })
+  name: string;
+
   @Column({ unique: true })
   email: string;
 
-  @Column({ unique: true })
+  @Column({ unique: false })
   type: string;
 
   @Column()
@@ -22,6 +26,6 @@ export class User {
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
 }

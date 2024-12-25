@@ -7,8 +7,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Index('IDX_QUIZ_QUESTION', ['question'])
-@Entity()
+@Index('IDX_QUIZZES_QUESTION', ['question'])
+@Entity('quizzes')
 export class Quiz {
   @PrimaryGeneratedColumn()
   id: number;

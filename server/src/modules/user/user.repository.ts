@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationDto } from 'src/utils/pagination.dto';
 
 @Injectable()
 export class UserRepository {
@@ -10,11 +11,16 @@ export class UserRepository {
     private readonly repository: Repository<User>,
   ) {}
 
-  findAll() {
-    return this.repository.find();
+  findAllData(paginationDto: PaginationDto, whereClause: any) {
+    return this.repository.findAndCount({
+      where: whereClause,
+      skip: (paginationDto.page - 1) * paginationDto.limit,
+      take: paginationDto.limit,
+      order: { id: 'DESC' },
+    });
   }
 
-  findOneById(id: number) {
+  findOneById(id: number): Promise<User | null> {
     return this.repository.findOneBy({ id });
   }
 
@@ -23,6 +29,10 @@ export class UserRepository {
   }
 
   create(user: Partial<User>) {
+    return this.repository.create(user);
+  }
+
+  save(user: User) {
     return this.repository.save(user);
   }
 

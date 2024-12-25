@@ -1,49 +1,55 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
-  Param,
-  Patch,
-  Delete,
-  HttpCode,
+  HttpException,
   HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { PaginationDto } from 'src/utils/pagination.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
+  @Post()
+  async create(@Body() user: CreateUserDto) {
+    try {
+      return await this.userService.createUser(user);
+    } catch (error) {
+      throw new HttpException(
+        error.message || 'Internal server error',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async index(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('limit', ParseIntPipe) limit: number,
+    @Query('search') search: string,
+  ) {
+    const paginationDto: PaginationDto = { page, limit };
+    return await this.userService.findAllData(paginationDto, search);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.userService.findOneById(id);
+  async show(@Param('id') id: number) {
+    return await this.userService.getUserById(id);
   }
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
+  // @Post(':id')
+  // async update(@Param('id') id: number, @Body() updateUserDto: User) {
+  //   return await this.userService.update(id, updateUserDto);
+  // }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return this.userService.update(id, updateUserDto);
-  }
-
-  @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id') id: number) {
-    return this.userService.delete(id);
-  }
+  // @Delete(':id')
+  // async delete(@Param('id') id: number) {
+  //   return await this.userService.delete(id);
+  // }
 }
