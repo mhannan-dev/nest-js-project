@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "content": "Hello, World!",
+    "author": "John Doe"
+  },
+  {
+    "id": 2,
+    "content": "NestJS is awesome!",
+    "author": "Jane Smith"
+  },
+  {
+    "id": 3,
+    "content": "This is a test message.",
+    "author": null
+  },
+  {
+    "id": 4,
+    "content": "Learning TypeORM is fun!",
+    "author": "Developer"
+  },
+  {
+    "id": 5,
+    "content": "JSON files are easy to work with.",
+    "author": "Alice"
+  },
+  {
+    "id": 6,
+    "content": "Don't forget to hydrate!",
+    "author": "Health Bot"
+  },
+  {
+    "id": 7,
+    "content": "Programming is both an art and a science.",
+    "author": "Coding Guru"
+  },
+  {
+    "id": 8,
+    "content": "Let's build something amazing today.",
+    "author": null
+  },
+  {
+    "id": 9,
+    "content": "Automate tasks to save time.",
+    "author": "Productivity Enthusiast"
+  },
+  {
+    "id": 10,
+    "content": "Debugging is twice as hard as writing the code.",
+    "author": "Software Engineer"
+  }
+]
